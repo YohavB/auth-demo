@@ -2,36 +2,9 @@ import { Button, Modal, Alert } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { signInWithGoogle } from "../firebase";
 
-
-import firebase from "firebase/app";
-import "firebase/auth";
-
-const app = firebase.initializeApp({
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_PROJECT_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-});
-
-export const auth = app.auth();
-
-const googleProvider = new firebase.auth.GoogleAuthProvider();
-
-export const signInWithGoogle = () => {
-  auth
-    .signInWithPopup(googleProvider)
-    .then((res) => {
-      console.log(res.user);
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
-};
-
-function ModalGoogleLogin() {
+export default function ModalGoogleLogin() {
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const { currentUser } = useAuth();
@@ -94,28 +67,3 @@ function ModalGoogleLogin() {
     </>
   );
 }
-
-
-const facebookProvider = new firebase.auth.FacebookAuthProvider();
-
-export const signInWithFacebook = () => {
-  auth
-    .signInWithPopup(facebookProvider)
-    .then((res) => {
-      console.log(res.user);
-    })
-    .catch((error) => {
-     
-
-      if (error.code === "auth/account-exists-with-different-credential") {
-        console.log("modal");
-        //{handleShow}
-      } else {
-        console.log(error.message);
-      }
-    });
-};
-
-
-
-export default app;

@@ -74,6 +74,7 @@ export default function Login() {
               Log In
             </Button>
             <Button
+              disabled={loading}
               className="w-100 mt-1 mb-1"
               onClick={handleSignInWithGoogle}
             >
@@ -83,7 +84,11 @@ export default function Login() {
               />
               <span> Continue with Google</span>
             </Button>
-            <Button className="w-100" onClick={handleSignInWithFacebook}>
+            <Button
+              disabled={loading}
+              className="w-100"
+              onClick={handleSignInWithFacebook}
+            >
               <img
                 src="https://img.icons8.com/ios-filled/30/icon/FeFKy6pAkhxv/facebook"
                 alt="facebook icon"
